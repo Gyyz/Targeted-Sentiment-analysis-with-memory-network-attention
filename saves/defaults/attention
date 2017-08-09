@@ -1,0 +1,2 @@
+model_checkpoint_path: "attention-trained-10"
+all_model_checkpoint_paths: "attention-trained-10"
