@@ -3,7 +3,49 @@ This repository contains the modified code used to train the Singlish dependency
 
 Tip: words.txt, tags.txt, and rels.txt should be saved when training the base English parser, and put in the saves directory when loading the base model.
 
-Original Readme:
+### How to train:
+
+Basic Attention Model:
+
+``` bash
+python network.py --config_file config/myconfig.cfg --model Attention
+```
+
+Attention With Context:
+
+``` bash
+python network.py --config_file config/myconfig.cfg --model CAttention
+```
+
+Attention With Gated Context:
+
+``` bash
+python network.py --config_file config/myconfig.cfg --model CGAttention
+```
+
+Attention with Memory Network (MN):
+
+``` bash
+python network.py --config_file config/myconfig.cfg --model MAttention --mem_recur 2
+```
+
+Context Attention with MN:
+
+``` bash
+python network.py --config_file config/myconfig.cfg --model MCAttention --mem_recur 2
+```
+
+Gated Context Attention with MN:
+
+``` bash
+python network.py --config_file config/myconfig.cfg —model MGCAttention --mem_recur 2
+```
+
+
+
+
+
+# Original Readme:
 
 # Parser
 
