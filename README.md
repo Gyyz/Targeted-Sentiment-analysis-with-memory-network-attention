@@ -8,37 +8,37 @@ Tip: words.txt, tags.txt, and rels.txt should be saved when training the base En
 Basic Attention Model:
 
 ``` bash
-python network.py --config_file config/myconfig.cfg --model Attention
+python network.py --config_file config/myconfig.cfg --model Attention --save_dir saves/mymodel
 ```
 
 Attention With Context:
 
 ``` bash
-python network.py --config_file config/myconfig.cfg --model CAttention
+python network.py --config_file config/myconfig.cfg --model CAttention --save_dir saves/mymodel
 ```
 
 Attention With Gated Context:
 
 ``` bash
-python network.py --config_file config/myconfig.cfg --model CGAttention
+python network.py --config_file config/myconfig.cfg --model CGAttention --save_dir saves/mymodel
 ```
 
 Attention with Memory Network (MN):
 
 ``` bash
-python network.py --config_file config/myconfig.cfg --model MAttention --mem_recur 2
+python network.py --config_file config/myconfig.cfg --model MAttention --mem_recur 2 --save_dir saves/mymodel
 ```
 
 Context Attention with MN:
 
 ``` bash
-python network.py --config_file config/myconfig.cfg --model MCAttention --mem_recur 2
+python network.py --config_file config/myconfig.cfg --model MCAttention --mem_recur 2 --save_dir saves/mymodel
 ```
 
 Gated Context Attention with MN:
 
 ``` bash
-python network.py --config_file config/myconfig.cfg —model MGCAttention --mem_recur 2
+python network.py --config_file config/myconfig.cfg —model MGCAttention --mem_recur 2 --save_dir saves/mymodel
 ```
 
 
