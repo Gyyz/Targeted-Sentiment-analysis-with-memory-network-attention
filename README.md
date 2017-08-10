@@ -5,6 +5,7 @@ Tip: words.txt, tags.txt, and rels.txt should be saved when training the base En
 ##To Train:
 ``` bash
 python network.py --config_file config/myconfig.cfg --save_dir saves/mymodel --model Attention/CAttention/CGAttention/MAttention/MCAttention/MCGAttention -mem_recur 300 -n_remem 2
+```
 
 Original Readme:
 
