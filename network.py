@@ -291,20 +291,20 @@ class AttWork(Configurable):
         id2mod[2]='positive'
         id2mod[0]='negative'
         id2mod[1]='neutral'
-        with open(os.path.join(self.save_dir, os.path.basename(filename)), 'w') as f:
-            for bkt_idx, idx in dataset._metabucket.data:
-                data = dataset._metabucket[bkt_idx].data[idx][0:]
-                preds = all_predictions[bkt_idx][idx]
-                words = all_sents[bkt_idx][idx]
-                target_flag=0
-                for i, (datum, word, pred) in enumerate(zip(data, words, preds)):
-                    tup = (
-                        word,
-                        self.getMod(target_flag, pred[2], id2mod[pred[4]])
-                     )
-                    target_flag= 1 if pred[2] == 1 else 0 
-                    f.write('%s\t%s\n' % tup)
-                f.write('\n')
+#        with open(os.path.join(self.save_dir, os.path.basename(filename)), 'w') as f:
+#            for bkt_idx, idx in dataset._metabucket.data:
+#                data = dataset._metabucket[bkt_idx].data[idx][0:]
+#                preds = all_predictions[bkt_idx][idx]
+#                words = all_sents[bkt_idx][idx]
+#                target_flag = 0
+#                for i, (datum, word, pred) in enumerate(zip(data, words, preds)):
+#                    tup = (
+#                        word,
+#                        self.getMod(target_flag, pred[2], id2mod[pred[4]])
+#                     )
+#                    target_flag = 1 if pred[2] == 1 else 0
+#                    f.write('%s\t%s\n' % tup)
+#                f.write('\n')
 #        with open(os.path.join(self.save_dir, 'scores.txt'), 'a') as f:
 #            s, _ = self.model.evaluate(os.path.join(self.save_dir, os.path.basename(filename)), punct=self.model.PUNCT)
 #            f.write(s)

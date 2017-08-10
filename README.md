@@ -3,49 +3,7 @@ This repository contains the modified code used to train the Singlish dependency
 
 Tip: words.txt, tags.txt, and rels.txt should be saved when training the base English parser, and put in the saves directory when loading the base model.
 
-### How to train:
-
-Basic Attention Model:
-
-``` bash
-python network.py --config_file config/myconfig.cfg --model Attention --save_dir saves/mymodel
-```
-
-Attention With Context:
-
-``` bash
-python network.py --config_file config/myconfig.cfg --model CAttention --save_dir saves/mymodel
-```
-
-Attention With Gated Context:
-
-``` bash
-python network.py --config_file config/myconfig.cfg --model CGAttention --save_dir saves/mymodel
-```
-
-Attention with Memory Network (MN):
-
-``` bash
-python network.py --config_file config/myconfig.cfg --model MAttention --mem_recur 2 --save_dir saves/mymodel
-```
-
-Context Attention with MN:
-
-``` bash
-python network.py --config_file config/myconfig.cfg --model MCAttention --mem_recur 2 --save_dir saves/mymodel
-```
-
-Gated Context Attention with MN:
-
-``` bash
-python network.py --config_file config/myconfig.cfg —model MGCAttention --mem_recur 2 --save_dir saves/mymodel
-```
-
-
-
-
-
-# Original Readme:
+Original Readme:
 
 # Parser
 
@@ -56,8 +14,7 @@ This repository contains the code used to train the parsers described in the pap
 * `configurable.py`: This file contains the Configurable class, which wraps a `SafeConfigParser` that stores model hyperparameter options (such as dropout keep probability and recurrent size). Most or all classes in this repository inherit from it.
 * `lib/models/nn.py`: This file contains the `NN` class, which inherits from `Configurable`. It contains functions such as `MLP` and `RNN` that are general-purpose but require knowledge of model hyperparameters.
 * `lib/models/rnn.py`: This file contains functions for building tensorflow recurrent neural networks. It is largely copied and pasted tensorflow source code with a few modifications to include a dynamic *bidirectional* recurrent neural network (rather than just a dynamic *unidirectional* one, which was all that was available when this project was started) and same-mask recurrent dropout.
-* ~~`lib/models/parsers`: This directory contains different parser architectures. All parsers inherit from `BaseParser`, which in turn inherits from `NN`. The README in that directory details the differences between architectures.~~
-* `lib/models/sentiment/`: This directory contains different attention archtectures. All attention models inherit from `BaseAttention`, which in turn inherits from `NN`. The README in that directory details the differences between architectures.
+* `lib/models/parsers`: This directory contains different parser architectures. All parsers inherit from `BaseParser`, which in turn inherits from `NN`. The README in that directory details the differences between architectures.
 * `lib/rnn_cells`: This directory contains a number of different recurrent cells (including LSTMs and GRUs). All recurrent cells inherit from `BaseCell` which inherits from `Configurable` (but not `NN`). The README in that directory details the different cell types.
 * `lib/optimizers`: This directory contains the optimizer used to optimize the network. All optimizers inherit from `BaseOptimizer` which inherits from `Configurable` (again not `NN`). See the README in that directory for further explanation.
 * `vocab.py`: This file contains the `Vocab` class, which manages a vocabulary of discrete strings (tokens, POS tags, dependency labels).

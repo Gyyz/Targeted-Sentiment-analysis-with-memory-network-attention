@@ -44,15 +44,19 @@ class CAttention(BaseAttentions):
         with tf.variable_scope('Attention_context', reuse=reuse):
             """"""
             if moving_params is None:
-                top_recur = tf.nn.dropout(top_recur, 0.6, seed=666)  # batch_size, bucket_size, lstm_dim(300)
+                top_recur = tf.nn.dropout(top_recur, 0.6, seed=76)  # batch_size, bucket_size, lstm_dim(300)
             # =======================================================
             htscore = self.getTarHd(top_recur, istarget)  # get the target_word average score
 
             attenlseq = self.compAtt(top_recur, htscore, bftarget, scope='leftatt')  # get s'= sum(alpha*hi) ==> h_s
             attenrseq = self.compAtt(top_recur, htscore, aftarget, scope='rightatt')
             attenwseq = self.compAtt(top_recur, htscore, nontarget, scope='allatt')
+            if moving_params is None:
+                attenrseq = tf.nn.dropout(attenrseq, 0.5, seed=77)
+                attenwseq = tf.nn.dropout(attenwseq, 0.5, seed=77)
+                attenlseq = tf.nn.dropout(attenlseq, 0.5, seed=77)
 
-            sntVec = self.Seq2Pb(attenwseq, attenlseq, attenrseq)
+            sntVec = self.Seq2Pb(attenwseq, attenlseq, attenrseq, reuse=reuse)
             attout = self.attoutput(sntVec, targets)
             return attout
             # ======================================================================================================================

@@ -42,10 +42,12 @@ class Attention(BaseAttentions):
     with tf.variable_scope('Attention_based',reuse=reuse):
       """"""
       if moving_params is None:
-        top_recur = tf.nn.dropout(top_recur, 0.6, seed=666)#batch_size, bucket_size, lstm_dim(300)
+        top_recur = tf.nn.dropout(top_recur, 0.6, seed=76)#batch_size, bucket_size, lstm_dim(300)
       #=======================================================
       htscore = self.getTarHd(top_recur, istarget) #get the target_word average score
       attentionseq = self.compAtt(top_recur, htscore, nontarget, reuse=reuse) #get s'= sum(alpha*hi) ==> h_s
+      if moving_params is None:
+        attentionseq = tf.nn.dropout(attentionseq, 0.6, seed=77)
       sntVec = self.Seq2Pb(attentionseq, reuse=reuse)
       attout = self.attoutput(sntVec, targets)
       return attout

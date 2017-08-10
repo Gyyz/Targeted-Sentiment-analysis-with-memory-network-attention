@@ -44,7 +44,7 @@ class MAttention(BaseAttentions):
         with tf.variable_scope('Attention_based', reuse=reuse):
             """"""
             if moving_params is None:
-                top_recur = tf.nn.dropout(top_recur, 0.6, seed=666)  # batch_size, bucket_size, lstm_dim(300)
+                top_recur = tf.nn.dropout(top_recur, 0.4, seed=76)  # batch_size, bucket_size, lstm_dim(300)
             # =======================================================
             htscore = self.getTarHd(top_recur, istarget)  # get the target_word average score
             for j in range(self.n_remem):
@@ -55,10 +55,15 @@ class MAttention(BaseAttentions):
                     input_shape = tf.pack([batch_size, 1, input_size])
                     out_shape = tf.pack([batch_size, input_size])
                     htscore = tf.reshape(htscore, input_shape)
+                    if moving_params is None:
+                        htscore = tf.nn.dropout(htscore, 0.4, seed=77)
                     htscore,_ = self.MRNN(htscore)
                     htscore = tf.reshape(htscore, out_shape)
+                    if moving_params is None:
+                        htscore = tf.nn.dropout(htscore, 0.5, seed=78)
                     htscore = self.compAtt(top_recur, htscore, nontarget, reuse=reuse)
-
+            if moving_params is None:
+                htscore = tf.nn.dropout(htscore, 0.5, seed=77)
             sntVec = self.Seq2Pb(htscore,reuse=reuse)
             attout = self.attoutput(sntVec, targets)
             return attout

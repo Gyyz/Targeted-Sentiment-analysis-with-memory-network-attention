@@ -43,7 +43,7 @@ class MCGAttention(BaseAttentions):
         with tf.variable_scope('Attention_context', reuse=reuse):
             """"""
             if moving_params is None:
-                top_recur = tf.nn.dropout(top_recur, 0.6, seed=666)  # batch_size, bucket_size, lstm_dim(300)
+                top_recur = tf.nn.dropout(top_recur, 0.6, seed=76)  # batch_size, bucket_size, lstm_dim(300)
             # =======================================================
             htscore = self.getTarHd(top_recur, istarget)  # get the target_word average score
 
@@ -56,9 +56,13 @@ class MCGAttention(BaseAttentions):
                     input_shape = tf.pack([batch_size, 1, input_size])
                     out_shape = tf.pack([batch_size, input_size])
                     attenwseq = tf.reshape(attenwseq, input_shape)
+                    if moving_params is None:
+                        attenwseq = tf.nn.dropout(attenwseq, 0.6, seed=77)
                     attenwseq,_ = self.MRNN(attenwseq)
                     attenwseq = tf.reshape(attenwseq, out_shape)
                     attenwseq = self.compAtt(top_recur, attenwseq, nontarget, scope='allatt', reuse=reuse)
+                    if moving_params is None:
+                        attenwseq = tf.nn.dropout(attenwseq, 0.5, seed=78)
 
             for j in range(self.n_remem):
                 with tf.variable_scope('MEMLAtt%d'%j, reuse=reuse):
@@ -67,9 +71,13 @@ class MCGAttention(BaseAttentions):
                     input_shape = tf.pack([batch_size, 1, input_size])
                     out_shape = tf.pack([batch_size, input_size])
                     attenlseq = tf.reshape(attenlseq, input_shape)
+                    if moving_params is None:
+                        attenlseq = tf.nn.dropout(attenlseq, 0.6, seed=77)
                     attenlseq,_ = self.MRNN(attenlseq)
                     attenlseq = tf.reshape(attenlseq, out_shape)
                     attenlseq = self.compAtt(top_recur, attenlseq, nontarget, scope='leftatt', reuse=reuse)
+                    if moving_params is None:
+                        attenlseq = tf.nn.dropout(attenlseq, 0.5, seed=78)
 
             for j in range(self.n_remem):
                 with tf.variable_scope('MEMRAtt%d'%j, reuse=reuse):
@@ -78,9 +86,13 @@ class MCGAttention(BaseAttentions):
                     input_shape = tf.pack([batch_size, 1, input_size])
                     out_shape = tf.pack([batch_size, input_size])
                     attenrseq = tf.reshape(attenrseq, input_shape)
+                    if moving_params is None:
+                        attenrseq = tf.nn.dropout(attenrseq, 0.6, seed=77)
                     attenrseq,_ = self.MRNN(attenrseq)
                     attenrseq = tf.reshape(attenrseq, out_shape)
                     attenrseq = self.compAtt(top_recur, attenrseq, nontarget, scope='rightatt', reuse=reuse)
+                    if moving_params is None:
+                        attenrseq = tf.nn.dropout(attenrseq, 0.5, seed=78)
 
             for j in range(self.n_remem):
                 with tf.variable_scope('MEMRHT%d'%j, reuse=reuse):
@@ -89,10 +101,14 @@ class MCGAttention(BaseAttentions):
                     input_shape = tf.pack([batch_size, 1, input_size])
                     out_shape = tf.pack([batch_size, input_size])
                     htscore = tf.reshape(htscore, input_shape)
+                    if moving_params is None:
+                        htscore = tf.nn.dropout(htscore, 0.6, seed=77)
                     htscore, _ = self.MRNN(htscore)
                     htscore = tf.reshape(htscore, out_shape)
+                    if moving_params is None:
+                        htscore = tf.nn.dropout(htscore, 0.5, seed=78)
 
-            sntVec = self.Seq2Pb(attenwseq, attenlseq, attenrseq,relu=True, hitarget=htscore, reuse=reuse)
+            sntVec = self.Seq2Pb(attenwseq, attenlseq, attenrseq, relu=True, hitarget=htscore, reuse=reuse)
             attout = self.attoutput(sntVec, targets)
             return attout
             # ======================================================================================================================
