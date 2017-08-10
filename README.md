@@ -2,6 +2,9 @@
 This repository contains the modified code used to train the Singlish dependency parser,we use the LSTM framwork described in [Deep Biaffine Attention for Neural Dependency Parsing](https://arxiv.org/abs/1611.01734), whose code is available at https://github.com/tdozat/Parser and its original Readme follows this Readme. Our modified code mainly cover `./lib/models/sentiment/*`, `networ.py`, `bucket.py`, `dataset.py`, `vocab.py`.
 
 Tip: words.txt, tags.txt, and rels.txt should be saved when training the base English parser, and put in the saves directory when loading the base model.
+##To Train:
+``` bash
+python network.py --config_file config/myconfig.cfg --save_dir saves/mymodel --model Attention/CAttention/CGAttention/MAttention/MCAttention/MCGAttention -mem_recur 300 -n_remem 2
 
 Original Readme:
 
